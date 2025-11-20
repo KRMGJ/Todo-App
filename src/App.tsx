@@ -1,35 +1,164 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { useAuth } from "./hooks/useAuth";
+import { useTasks } from "./hooks/useTask";
+import { AuthForm } from "./components/AuthForm";
+import { ErrorBanner } from "./components/ErrorBanner";
+import { FilterBar } from "./components/FilterBar";
+import { TaskForm } from "./components/TaskForm";
+import { LoadingSpinner } from "./components/LoadingSpinner";
+import { TaskList } from "./components/TaskList";
+import type { TaskStatus } from "./types/task";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { user, loading: authLoading, signIn, signUp, logout } = useAuth();
+  const [isDark, setIsDark] = useState(false);
+
+  const [useFirebase, setUseFirebase] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [isDark]);
+
+  const userId = useFirebase && user ? user.uid : null;
+
+  const {
+    tasks,
+    loading,
+    error,
+    filter,
+    sort,
+    search,
+    setFilter,
+    setSort,
+    setSearch,
+    addTask,
+    updateTaskStatus,
+    removeTask,
+    simulateError,
+    clearError,
+  } = useTasks(userId, useFirebase);
+
+  useEffect(() => {
+    clearError();
+  }, [useFirebase, userId]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-slate-100 px-4 py-6">
+      <div className="mx-auto max-w-4xl space-y-4">
+        <header className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-slate-900">
+              작업 관리 앱
+            </h1>
+
+            <p className="text-xs text-slate-500">
+              {useFirebase
+                ? user
+                  ? `${user.email} 님 안녕하세요.`
+                  : 'Firebase 모드 (로그인이 필요합니다)'
+                : 'Mock 모드 (로그인 없이 사용 가능)'}
+            </p>
+
+            <p className="mt-1 text-[11px] text-slate-400">
+              데이터 소스: {useFirebase ? 'Firebase' : 'Mock(메모리)'}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setUseFirebase((prev) => !prev)}
+              className="rounded-md border px-2 py-1 text-[11px] bg-white text-slate-700 shadow-sm"
+            >
+              {useFirebase ? 'Mock 모드로 전환' : 'Firebase 모드로 전환'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsDark((prev) => !prev)}
+              className="rounded-md border px-2 py-1 text-[11px]"
+            >
+              {isDark ? '라이트' : '다크'}
+            </button>
+
+            {useFirebase && user && (
+              <button
+                type="button"
+                onClick={() => logout()}
+                className="rounded-md bg-slate-800 px-3 py-1 text-xs font-semibold text-white"
+              >
+                로그아웃
+              </button>
+            )}
+          </div>
+        </header>
+
+        {useFirebase && authLoading && (
+          <div className="min-h-[200px] flex items-center justify-center text-sm text-slate-600">
+            로그인 상태 확인 중...
+          </div>
+        )}
+
+        {useFirebase && !authLoading && !user && (
+          <AuthForm
+            onSignIn={signIn}
+            onSignUp={signUp}
+          />
+        )}
+
+        {(!useFirebase || (useFirebase && !authLoading && !!user)) && (
+          <>
+            {error && (
+              <ErrorBanner
+                message={error}
+                onRetry={clearError}
+              />
+            )}
+
+            <button
+              type="button"
+              onClick={simulateError}
+              className="text-xs text-red-600 underline"
+            >
+              에러 상황 테스트하기
+            </button>
+
+            <FilterBar
+              filter={filter}
+              sort={sort}
+              search={search}
+              onChangeFilter={setFilter}
+              onChangeSort={setSort}
+              onChangeSearch={setSearch}
+            />
+
+            <TaskForm onAddTask={addTask} />
+
+            {loading && (
+              <div className="flex justify-center py-4">
+                <LoadingSpinner />
+              </div>
+            )}
+
+            {!loading && tasks.length > 0 && (
+              <TaskList
+                tasks={tasks}
+                onChangeStatus={(id: string, status: TaskStatus) =>
+                  updateTaskStatus(id, status)
+                }
+                onRemove={removeTask}
+              />
+            )}
+          </>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
