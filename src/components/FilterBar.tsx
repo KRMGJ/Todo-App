@@ -9,18 +9,31 @@ interface FilterBarProps {
     onChangeSearch: (search: string) => void;
 }
 
-export function FilterBar({
-    filter,
-    sort,
-    search,
-    onChangeFilter,
-    onChangeSort,
-    onChangeSearch,
-}: FilterBarProps) {
+/**
+ * @description FilterBar component to display a filter bar with task status filter and title search functionality (할 일 상태 필터 및 제목 검색 기능을 가진 필터 바 컴포넌트)
+ * @param {FilterBarProps} props - Component props (컴포넌트 속성)
+ * @property {TaskFilter} filter - Task status filter value (할 일 상태 필터 값)
+ * @property {TaskSort | null} sort - Task sort value (할 일 정렬 값)
+ * @property {string} search - Task title search value (할 일 제목 검색 값)
+ * @property {(filter: TaskFilter) => void} onChangeFilter - Callback function to invoke when changing task status filter (할 일 상태 필터 변경 콜백 함수)
+ * @property {(sort: TaskSort | null) => void} onChangeSort - Callback function to invoke when changing task sort (할 일 정렬 변경 콜백 함수)
+ * @property {(search: string) => void} onChangeSearch - Callback function to invoke when changing task title search value (할 일 제목 검색 값 변경 콜백 함수)
+ * @author 장민규
+ * @created 2025-11-20
+ */
+export function FilterBar({ filter, sort, search, onChangeFilter, onChangeSort, onChangeSearch }: FilterBarProps) {
+    /**
+     * @description Callback function to invoke when changing task status filter (할 일 상태 필터 변경 콜백 함수)
+     * @param {TaskFilter} value - Task status filter value (할 일 상태 필터 값)
+     */
     const filterClickHandler = (value: TaskFilter) => {
         onChangeFilter(value);
     };
 
+    /**
+     * @description Callback function to invoke when changing task sort (할 일 정렬 변경 콜백 함수)
+     * @param {string | null} value - Task sort value (할 일 정렬 값)
+     */
     const sortClickHandler = (value: string | null) => {
         if (!value) {
             onChangeSort(null);
@@ -83,7 +96,6 @@ export function FilterBar({
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                {/* 검색 */}
                 <div className="flex-1">
                     <label className="mb-1 block text-xs font-medium text-slate-500">
                         제목 검색
