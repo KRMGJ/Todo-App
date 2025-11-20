@@ -13,13 +13,15 @@ interface ErrorBannerProps {
  */
 export function ErrorBanner({ message, onRetry }: ErrorBannerProps) {
     return (
-        <div className="w-full rounded-md border border-red-300 bg-red-50 px-4 py-3 text-red-800 shadow-sm flex items-start justify-between gap-4">
+        <div className="w-full rounded-md border border-red-300 bg-red-50 px-4 py-3 text-red-800 shadow-sm flex items-start justify-between gap-4
+                        dark:border-red-700 dark:bg-red-900/30 dark:text-red-200">
             <div className="text-sm font-medium">
                 오류: {message}
             </div>
             <button type="button"
                 onClick={onRetry}
-                className="shrink-0 text-sm font-semibold px-3 py-1 rounded-md bg-red-100 text-red-700 hover:bg-red-200">
+                className="shrink-0 text-sm font-semibold px-3 py-1 rounded-md bg-red-100 text-red-700 hover:bg-red-200
+                        dark:bg-red-800/40 dark:text-red-100 dark:hover:bg-red-800/60">
                 다시 시도
             </button>
         </div>

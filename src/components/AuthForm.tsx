@@ -22,6 +22,12 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
     const [authError, setAuthError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
 
+    /**
+     * @description Handle form submission to sign in or sign up with email and password (이메일과 비밀번호로 로그인 또는 회원가입하는 폼 제출 처리)
+     * Prevent default form submission behavior, reset the auth error message,
+     * call the onSignIn or onSignUp callback with the current email and password,
+     * and finally reset the submitting state to false.
+     */
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setAuthError(null);
@@ -41,22 +47,24 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <div className="min-h-screen flex items-center justify-center bg-slate-100 dark:bg-slate-950 px-4">
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-sm space-y-4 rounded-xl border border-slate-200 bg-white/95 shadow-xl px-6 py-7">
-                <h1 className="text-xl font-semibold text-center text-slate-900">
+                className="w-full max-w-sm space-y-4 rounded-xl border border-slate-200 bg-white/95 shadow-xl px-6 py-7
+                        dark:bg-slate-900 dark:border-slate-700 dark:text-slate-50">
+                <h1 className="text-xl font-semibold text-center text-slate-900 dark:text-slate-50">
                     {mode === 'signin' ? '로그인' : '회원가입'}
                 </h1>
 
                 <div>
-                    <label className="block text-sm mb-1 text-slate-700">
+                    <label className="block text-sm mb-1 text-slate-700 dark:text-slate-300">
                         이메일
                     </label>
                     <input
                         type="email"
                         className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm bg-white text-slate-900
-                                    focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-400"
+                                    focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-400
+                                    dark:bg-slate-950 dark:border-slate-700 dark:text-slate-50 dark:placeholder:text-slate-500"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -65,13 +73,14 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm mb-1 text-slate-700">
+                    <label className="block text-sm mb-1 text-slate-700 dark:text-slate-300">
                         비밀번호
                     </label>
                     <input
                         type="password"
                         className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm bg-white text-slate-900
-                                    focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-400"
+                                    focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-400
+                                    dark:bg-slate-950 dark:border-slate-700 dark:text-slate-50 dark:placeholder:text-slate-500"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -80,7 +89,7 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
                 </div>
 
                 {authError && (
-                    <p className="text-sm text-red-600">
+                    <p className="text-sm text-red-600 dark:text-red-400">
                         {authError}
                     </p>
                 )}
@@ -89,7 +98,8 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
                     type="submit"
                     disabled={submitting}
                     className="w-full py-2.5 rounded-md text-sm font-medium bg-sky-600 text-white hover:bg-sky-500 disabled:opacity-60 disabled:cursor-not-allowed
-                                focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-100">
+                                focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-100
+                                dark:focus:ring-offset-slate-950">
                     {submitting ? mode === 'signin' ? '로그인 중...' : '회원가입 중...'
                                 : mode === 'signin' ? '로그인' : '회원가입'}
                 </button>
@@ -99,7 +109,8 @@ export const AuthForm: FC<AuthFormProps> = ({ onSignIn, onSignUp }) => {
                     onClick={() =>
                         setMode(mode === 'signin' ? 'signup' : 'signin')
                     }
-                    className="w-full py-2 text-xs underline text-slate-600 hover:text-slate-800">
+                    className="w-full py-2 text-xs underline text-slate-600 hover:text-slate-800
+                            dark:text-slate-400 dark:hover:text-slate-200">
                     {mode === 'signin' ? '계정이 없나요? 회원가입' : '이미 계정이 있나요? 로그인'}
                 </button>
             </form>

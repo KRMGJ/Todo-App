@@ -40,10 +40,11 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm flex flex-col gap-3">
+            className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm flex flex-col gap-3
+                    dark:bg-slate-900 dark:border-slate-700">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <div className="flex-1">
-                    <label className="mb-1 block text-xs font-medium text-slate-500">
+                    <label className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">
                         작업 제목
                     </label>
                     <input
@@ -51,18 +52,20 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
                         value={title}
                         placeholder="예: 코딩 과제 구현하기"
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 placeholder:text-slate-400" />
+                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 placeholder:text-slate-400
+                                dark:bg-slate-900 dark:border-slate-700 dark:text-slate-50 dark:placeholder:text-slate-500" />
                 </div>
 
                 <div className="w-full sm:w-40">
-                    <label className="mb-1 block text-xs font-medium text-slate-500">
+                    <label className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">
                         마감일(선택)
                     </label>
                     <input
                         type="date"
                         value={dueDate}
                         onChange={(e) => setDueDate(e.target.value)}
-                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
+                                dark:bg-slate-900 dark:border-slate-700 dark:text-slate-50 dark:placeholder:text-slate-500"
                     />
                 </div>
 
@@ -70,7 +73,8 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
                     <button
                         type="submit"
                         className="inline-flex w-full items-center justify-center rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm
-                                hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
+                                hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60
+                                dark:bg-sky-500 dark:hover:bg-sky-400 dark:focus:ring-offset-slate-900"
                     >
                         추가
                     </button>

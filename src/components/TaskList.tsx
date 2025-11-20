@@ -19,7 +19,8 @@ interface TaskListProps {
 export function TaskList({ tasks, onChangeStatus, onRemove }: TaskListProps) {
     if (tasks.length === 0) {
         return (
-            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">
+            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center text-sm text-slate-500
+                            dark:border-slate-600 dark:bg-slate-900/40 dark:text-slate-400">
                 할 일이 없습니다.
             </div>
         );
@@ -27,7 +28,7 @@ export function TaskList({ tasks, onChangeStatus, onRemove }: TaskListProps) {
 
     return (
         <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-slate-500">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                 <span>총 {tasks.length}개</span>
             </div>
             <div className="space-y-2">
