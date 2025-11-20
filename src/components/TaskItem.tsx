@@ -6,6 +6,15 @@ interface TaskItemProps {
     onRemove: (id: string) => void;
 }
 
+/**
+ * @description Task item component to display a task with status update and removal options (할 일 컴포넌트에 상태 업데이트 및 삭제 옵션을 표시하는 컴포넌트)
+ * @param {TaskItemProps} props - Component props (컴포넌트 속성)
+ * @property {Task} task - Task to display (표시할 할 일)
+ * @property {(id: string, status: TaskStatus) => void} onChangeStatus - Callback function to invoke when updating task status (할 일 상태 업데이트 콜백 함수)
+ * @property {(id: string) => void} onRemove - Callback function to invoke when removing a task (할 일 삭제 콜백 함수)
+ * @author 장민규
+ * @created 2025-11-20
+ */
 export function TaskItem({ task, onChangeStatus, onRemove }: TaskItemProps) {
     return (
         <div className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm flex flex-col gap-3">
